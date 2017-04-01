@@ -32,6 +32,11 @@ namespace NuGet.Jobs
 
         public void SetJobTraceListener(JobTraceListener jobTraceListener)
         {
+            if (JobTraceListener != null)
+            {
+                Trace.Listeners.Remove(JobTraceListener);
+            }
+
             JobTraceListener = jobTraceListener;
             Trace.Listeners.Add(jobTraceListener);
 

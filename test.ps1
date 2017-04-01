@@ -19,15 +19,17 @@ trap {
 Function Run-Tests {
     [CmdletBinding()]
     param()
-    
+
     Trace-Log 'Running tests'
-    
+
     $xUnitExe = (Join-Path $PSScriptRoot "packages\xunit.runner.console\tools\xunit.console.exe")
-    
-    $TestAssemblies = "tests\Tests.Stats.CollectAzureCdnLogs\bin\$Configuration\Tests.Stats.CollectAzureCdnLogs.dll", "tests\Tests.Stats.ImportAzureCdnStatistics\bin\$Configuration\Tests.Stats.ImportAzureCdnStatistics.dll"
-    
+
+    $TestAssemblies = "tests\Tests.Stats.CollectAzureCdnLogs\bin\$Configuration\Tests.Stats.CollectAzureCdnLogs.dll", `
+        "tests\Tests.Stats.ImportAzureCdnStatistics\bin\$Configuration\Tests.Stats.ImportAzureCdnStatistics.dll", `
+        "tests\NuGet.Jobs.Common.Tests\bin\$Configuration\NuGet.Jobs.Common.Tests.dll"
+
     $TestCount = 0
-    
+
     foreach ($Test in $TestAssemblies) {
         & $xUnitExe (Join-Path $PSScriptRoot $Test) -xml "Results.$TestCount.xml"
         $TestCount++
